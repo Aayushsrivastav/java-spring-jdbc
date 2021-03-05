@@ -1,8 +1,10 @@
 package com.spring.springjdbc;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -16,7 +18,7 @@ public class App
         System.out.println( "Start" );
         
         //Spring jdbc
-        ApplicationContext context = new ClassPathXmlApplicationContext("com/spring/springjdbc/config.xml");
+//        ApplicationContext context = new ClassPathXmlApplicationContext("com/spring/springjdbc/config.xml");
 //        JdbcTemplate template = context.getBean("jdbcTemplate", JdbcTemplate.class);
 //        
 //        //Insert query
@@ -25,6 +27,8 @@ public class App
 //        //Execute query
 //        int result = template.update(insertQuery, 48, "wick", "delhi");
 //        System.out.println("number of record inserted :"+ result);
+        
+        ApplicationContext context = new AnnotationConfigApplicationContext(com.spring.springjdbc.jdbcConfig.class);
         
         StudentDao studentDao = context.getBean("studentDao", StudentDao.class);
         //////////////////////INSERT/////////////////////////////
@@ -53,7 +57,14 @@ public class App
         
         /////////////////////////Single data////////////////////
         
-        Student student = studentDao.getStudent(222);
-        System.out.println(student);
+//        Student student = studentDao.getStudent(222);
+//        System.out.println(student);
+        
+		/////////////////////////Multiple data////////////////////
+		        
+		List<Student> students = studentDao.getAllStudents();
+		for (Student s : students) {
+			System.out.println(s);
+		}
     }
 }
